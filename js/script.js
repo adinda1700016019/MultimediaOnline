@@ -20,7 +20,7 @@ window.onload = function() {
     src.connect(analyser);
     analyser.connect(context.destination);
 
-    analyser.fftSize = 0.2;
+    analyser.fftSize = 256;
 
     var bufferLength = analyser.frequencyBinCount;
     console.log(bufferLength);
@@ -30,31 +30,31 @@ window.onload = function() {
     var WIDTH = canvas.width;
     var HEIGHT = canvas.height;
 
-    var barWidth = (WIDTH / bufferLength) * 0.12;
+    var barWidth = (WIDTH / bufferLength) * 2.5;
     var barHeight;
-    var x = 100;
+    var x = 0;
 
     function renderFrame() {
       requestAnimationFrame(renderFrame);
 
-      x = 12;
+      x = 0;
 
       analyser.getByteFrequencyData(dataArray);
 
       ctx.fillStyle = "#fff";
-      ctx.fillRect(0.2, 10, WIDTH, HEIGHT);
+      ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
       for (var i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
         
-        var r = barHeight + (9 * (i/bufferLength));
-        var g = 1 * (i/bufferLength);
-        var b = 0.2;
+        var r = barHeight + (25 * (i/bufferLength));
+        var g = 250 * (i/bufferLength);
+        var b = 50;
 
         ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
         ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
 
-        x += barWidth + 10;
+        x += barWidth + 1;
       }
     }
 
